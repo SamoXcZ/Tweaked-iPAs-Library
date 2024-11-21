@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>App Library</title>
+<style>
+@import url('https://fonts.googleapis.com/css?family=Roboto:300');
+
+:root {
+  --background: #0f172a;
+  --card-bg: #1e293b;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --accent: #3b82f6;
+  --card-hover: #334155;
+  --button-gradient: linear-gradient(45deg, #3b82f6, #8b5cf6, #3b82f6);
+  --button-hover-gradient: linear-gradient(45deg, #2563eb, #7c3aed, #2563eb);
+  --error-color: #ef4444;
+}
+
+/* Title Animation Styles */
+.title-container {
+  text-align: center;
+  margin-bottom: clamp(20px, 4vw, 40px);
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  color: var(--text-primary);
+}
+
+.title-container div {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.title-container div:first-of-type {
+  animation: showup 7s infinite;
+}
+
+.title-container div:last-of-type {
+  width: 0px;
+  animation: reveal 7s infinite;
+}
+
+.title-container div:last-of-type span {
+  margin-left: -355px;
+  animation: slidein 7s infinite;
+}
+
+@keyframes showup {
+    0% {opacity:0;}
+    20% {opacity:1;}
+    80% {opacity:1;}
+    100% {opacity:0;}
+}
+
+@keyframes slidein {
+    0% { margin-left:-800px; }
+    20% { margin-left:-800px; }
+    35% { margin-left:0px; }
+    100% { margin-left:0px; }
+}
+
+@keyframes reveal {
+    0% {opacity:0;width:0px;}
+    20% {opacity:1;width:0px;}
+    30% {width:355px;}
+    80% {opacity:1;}
+    100% {opacity:0;width:355px;}
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Rest of the styles remain the same */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--background);
+  color: var(--text-primary);
+  min-height: 100vh;
+  padding: clamp(10px, 3vw, 30px);
+}
+
+.container {
+  max-width: min(95%, 1200px);
+  margin: 0 auto;
+  padding: clamp(15px, 3vw, 30px);
+  background: rgba(30, 41, 59, 0.7);
+  border-radius: 24px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.app {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(15px, 3vw, 25px);
+  margin: 15px 0;
+  background: var(--card-bg);
+  border-radius: 16px;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.app:hover {
+  background: var(--card-hover);
+}
+
+.app .info {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 3vw, 20px);
+  flex: 1;
+}
+
+.app img {
+  width: clamp(48px, 8vw, 64px);
+  height: clamp(48px, 8vw, 64px);
+  border-radius: 14px;
+}
+
+.app .details {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.app h2 {
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  color: var(--text-primary);
+  margin-bottom: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app p {
+  color: var(--text-secondary);
+  font-size: clamp(0.8rem, 2vw, 0.95rem);
+  margin: 3px 0;
+  opacity: 0.9;
+}
+
+.app a {
+  text-decoration: none;
+  padding: clamp(10px, 2vw, 15px) clamp(20px, 4vw, 30px);
+  background: var(--button-gradient);
+  background-size: 200% 200%;
+  color: white;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  min-width: 120px;
+  text-align: center;
+  border-radius: 99px;
+  white-space: nowrap;
+  animation: gradientBG 3s ease infinite;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.app a:hover {
+  background: var(--button-hover-gradient);
+  background-size: 200% 200%;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(59, 130, 246, 0.4);
+}
+
+.loading {
+  text-align: center;
+  padding: clamp(20px, 4vw, 40px);
+  background: var(--card-bg);
+  border-radius: 16px;
+  color: var(--text-primary);
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+}
+
+.error {
+  text-align: center;
+  color: var(--error-color);
+  padding: clamp(20px, 4vw, 40px);
+  background: var(--card-bg);
+  border-radius: 16px;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+  .app {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+  
+  .app .info {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .app .details {
+    width: 100%;
+  }
+  
+  .app h2 {
+    white-space: normal;
+  }
+  
+  .app a {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
+/* Tablet Optimization */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .app {
+    padding: clamp(15px, 2.5vw, 20px);
+  }
+  
+  .app .info {
+    gap: clamp(10px, 2vw, 15px);
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="title-container">
+    <div>Tweaked</div>
+    <div>
+      <span>App Library</span>
+    </div>
+  </div>
+  <div id="appContainer">
+    <div class="loading">Loading apps...</div>
+  </div>
+</div>
+<script>
+async function fetchApps() {
+  const jsonUrl = "https://raw.githubusercontent.com/styxglitchy/repoipa/main/apps.json";
+  try {
+    const response = await fetch(jsonUrl);
+    const data = await response.json();
+
+    if (data.apps && Array.isArray(data.apps)) {
+      const apps = data.apps;
+      const appContainer = document.getElementById("appContainer");
+      appContainer.innerHTML = "";
+
+      apps.forEach(app => {
+        const appElement = document.createElement("div");
+        appElement.className = "app";
+
+        const iconFileName = app.bundleIdentifier + '.png';
+        const iconURL = `https://raw.githubusercontent.com/styxglitchy/repoipa/main/icons/${iconFileName}`;
+        const version = app.versions?.[0]?.version ?? 'Unknown';
+        const size = app.versions?.[0]?.size 
+          ? (app.versions[0].size / (1024 * 1024)).toFixed(2)
+          : 'Unknown';
+
+        appElement.innerHTML = `
+          <div class="info">
+            <img src="${iconURL}" alt="${app.name}" 
+                 onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 50 50%22><rect width=%2250%22 height=%2250%22 fill=%22%23374151%22/></svg>'">
+            <div class="details">
+              <h2>${app.name}</h2>
+              <p>Version ${version}</p>
+              <p>${size} MB</p>
+            </div>
+          </div>
+          <a href="${app.versions?.[0]?.downloadURL ?? '#'}" 
+             target="_blank" 
+             ${!app.versions?.[0]?.downloadURL ? 'disabled' : ''}>
+             Download
+          </a>
+        `;
+
+        appContainer.appendChild(appElement);
+      });
+    } else {
+      throw new Error("Apps data is missing or not in the correct format.");
+    }
+  } catch (error) {
+    console.error("Failed to fetch apps:", error);
+    document.getElementById("appContainer").innerHTML = `
+      <div class="error">
+        <h3>Failed to load apps</h3>
+        <p>Please try again later</p>
+      </div>
+    `;
+  }
+}
+
+fetchApps();
+</script>
+</body>
+</html>
